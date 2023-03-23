@@ -41,13 +41,14 @@ export default function CommentPage() {
         // const response = await fetch(`http://192.168.31.61:9000/blockchain/getWrape?uuid=92fbfe68a30dca2db88f2975b4d0335898ae2c0d78582baca2a3b9df1de0c058&key=bdc1bed5925bc907887fe48b4e44a1ff9968525a07282a15ef43b66c6791f734`)
      console.log("Uuid",uuid,key);
      
-        const response = await fetch(`http://192.168.31.61:9000/blockchain/getWrape?uuid=${uuid}&key=${key}`)
+        const response = await fetch(`http://localhost:9000/blockchain/getWrape?uuid=${uuid}&key=${key}`)
+        // const response = await fetch(`http://192.168.31.61:9000/blockchain/getWrape?uuid=${uuid}&key=${key}`)
         // const response = await fetch(`http://192.168.31.61:9000/blockchain/getWrape?uuid=${uuid}&key=${key}`)
         const jsonData = await response?.json();
         setPostData(jsonData);
      
      
-        const res = await fetch(`http://192.168.31.61:9000/blockchain/verify?uuid=${uuid}&key=${key}`);
+        const res = await fetch(`http://localhost:9000/blockchain/verify?uuid=${uuid}&key=${key}`);
         // const res2 = await fetch(`http://192.168.31.61:9000/blockchain/getWrape?uuid=${uuid}&key=${key}`);
 
 
@@ -72,26 +73,23 @@ console.log("sna",verifyData);
       {/* <Header /> */}
 
 
-        <div>
-          <h1>Target Hash: {uuid}</h1>
-          <h1>Key: {key}</h1>
-          <h2>ឯកសាត្រូវបានចេញដោយ៖ {verifyStatus[3]?.data[0]}</h2>
-          {verifyStatus[0]?.status=="VALID"?  <div> <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/> ឯកសារពិតជាត្រឹមត្រូវ​ ពិតប្រាកដមែន</div>  :"ឯកសារមិនត្រឹមត្រូវ"}
-          ,<br />
+        <div style={{fontFamily:"Khmer OS Battambang",textAlign:""}}>
+          <p>Target Hash: <span style={{color:"blue"}}> {uuid} </span></p>
+          <p>Key: <span style={{color:"blue"}}> {key} </span></p>
+    { verifyStatus != null?
+    <div>
+          <p>ឯកសាត្រូវបានចេញដោយ៖ <span style={{color:"orange",fontSize:"25px"}}>{verifyStatus[3]?.data[0]}</span></p>
+          {verifyStatus[0]?.status=="VALID"?  <div> <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/> ឯកសារពិតជាត្រឹមត្រូវ​ ពិតប្រាកដមែន</div>  :<div> <FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}} /> {verifyStatus[1]?.reason?.message} ឯកសារមិនត្រឹមត្រូវ</div>}
+          <br />
           { verifyStatus[1]?.status=="VALID"?<div> <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/> ឯកសារនៅមាន​សុពលភាព​(Document has not revoke)</div> :<div> <FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}} /> {verifyStatus[1]?.reason?.message}</div> }
           <br />
-          { verifyStatus[2]?.status=="VALID"? <div> <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/>  ឯកសាត្រូវបានចេញដោយអត្តសញ្ញាណច្បាស់លាស់</div>:verifyStatus[2]?.reason?.message}
- {/* <h2>ឯកសាត្រូវបានចេញដោយ៖ {verifyData[0]?.data[0]}</h2>
-    {
-      verifyData[0]?.status=="VALID"?"ឯកសារពិតជាត្រឹមត្រូវ":"ឯកសារមិនត្រឹមត្រូវ"
-      
+          { verifyStatus[2]?.status=="VALID"? <div> <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/> ​ឯកសាពិតជាបានចេញដោយ អត្តសញ្ញាណច្បាស់លាស់ពិតប្រាកដមែន </div> : <div><FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}} />ឯកសារមិនមាន អត្តសញ្ញាណច្បាស់លាស់</div>}
+       </div>
+      :"Loading..."
     }
-    <br></br>
-    { verifyData[1]?.status=="VALID"? "ឯកសារនៅមាន​សុពលភាព​(Document has not revoke)":verifyData[1]?.reason?.message}
-    <br></br>
-    { verifyData[2]?.status=="VALID"? "ឯកសាត្រូវបានចេញដោយអត្តសញ្ញាណច្បាស់លាស់":verifyData[1]?.reason?.message}
-    { verifyData[2]?.status=="VALID"? "ឯកសាត្រូវបានចេញដោយអត្តសញ្ញាណច្បាស់លាស់":verifyData[1]?.reason?.message}
- */}
+ 
+
+
 
           <Renderer document={getDataV2OrV3(postData?.payload)} rawDocument={postData?.payload} />
         </div>
