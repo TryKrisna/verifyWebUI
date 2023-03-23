@@ -30,7 +30,7 @@ interface RendererProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
-  console.log("document",document,"rawDocument",rawDocument);
+  // console.log("document",document,"rawDocument",rawDocument);
   
   const [height, setHeight] = useState(0);
   const [templates, setTemplates] = useState<Template[]>();
